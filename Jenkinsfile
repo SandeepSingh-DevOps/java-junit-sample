@@ -15,16 +15,21 @@ stages {
     stage("Build Code"){
             steps{
                 sh "mvn package"
-            }
-         
+            } 
     }     
-     stage('Quality test Code') {
+     stage('SonarQubr test') {
         steps{
             withSonarQubeEnv('My_Sonarqube') {
                     sh 'mvn sonar:sonar'
                 }    
         }
     }
+    
+      stage("Junit Code"){
+            steps{
+                sh "mvn clean test"
+            } 
+    }  
 
      stage("Deploy Code"){
             steps{
