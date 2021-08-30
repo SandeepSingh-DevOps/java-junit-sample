@@ -16,12 +16,7 @@ stages {
             steps{
                 sh "mvn package"
             }
-            post {
-                success {
-                    echo "Archiving artifacts..."
-                    archiveArtifacts artifacts: '**/target/*.war'
-            }
-        }
+         
     }     
      stage('Quality test Code') {
         steps{
