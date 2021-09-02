@@ -6,15 +6,10 @@ pipeline{
     }
 stages {
     
-    stage('Clean Code') {
-        steps{
-          sh 'mvn clean'
-        }
-    }
     
     stage("Build Code"){
             steps{
-                sh "mvn package"
+                sh "mvn clean package"
             } 
     }     
      stage('SonarQubr test') {
@@ -25,16 +20,10 @@ stages {
         }
     }
     
-      stage("Junit Code"){
-            steps{
-                sh "mvn clean test"
-            } 
-    }  
-
      stage("Deploy Code"){
             steps{
                 sshagent(['ubuntu']) {
-                sh "scp -o StrictHostKeyChecking=no target/*.war  ubuntu@172.31.42.112:/var/lib/tomcat9/webapps"
+                sh "scp -o StrictHostKeyChecking=no target/*.jar  ubuntu@13.236.87.62:/var/lib/tomcat9/webapps"
                 }
               }
      }
